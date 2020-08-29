@@ -14,63 +14,60 @@ blue = (48, 131, 220)
 yellow = (248, 255, 229)
 green = (125, 222, 146)
 blue_green = (46, 191, 165)
+        
+# clock
+clock = pygame.time.Clock()
 
-while True:
-    # player starting coordinates and size
+def game_loop():
+
     player_x = 375
     player_y = 500
     player_w = 50
     player_h = 50
+    x = 0       # used to change x value
 
-    # clock
-    clock = pygame.time.Clock()
+    while True:
+        # player starting coordinates and size
 
-    
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            quit()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+   
+            ##########
+            # Movement
+            ###########
+            keys = pygame.key.get_pressed()  # checks what keys are pressed
 
-    
+            if event.type == pygame.KEYDOWN:
 
+                if event.key == pygame.K_LEFT:
+                    x = -5
 
-    ##########
-    # Movement
-    ###########
-    
-        keys = pygame.key.get_pressed()  # checks what keys are pressed
+                elif event.key == pygame.K_RIGHT:
+                    x = 5
 
-        if event.type == pygame.KEYDOWN:
-
-            if event.key == pygame.K_LEFT:
-                player_x += -5
-
-        #     elif event.key == pygame.K_RIGHT:
-        #         player_x += 5
-
-        #     elif event.key == pygame.K_p:
-        #         pause = True
-        #         paused()
-
-        # # if a key is lifed while another is still held down     
-        # if event.type == pygame.KEYUP:
-            
-        #     if (event.key == pygame.K_RIGHT) and keys[pygame.K_LEFT]:
-        #         player_x += -5
-
-        #     elif (event.key == pygame.K_LEFT) and keys[pygame.K_RIGHT]:
-        #         player_x += 5 
+            # if a key is lifed while another is still held down     
+            if event.type == pygame.KEYUP:
                 
-        #     else:
-        #         player_x += 0
+                if (event.key == pygame.K_RIGHT) and keys[pygame.K_LEFT]:
+                    x = -5
 
-    print(player_x)
-    screen.fill(yellow) 
+                elif (event.key == pygame.K_LEFT) and keys[pygame.K_RIGHT]:
+                    x = 5 
+                    
+                else:
+                    x = 0
 
-    pygame.draw.rect(screen, blue, [player_x, player_y, player_w, player_h])
+        player_x += x
 
-    pygame.display.update()
-    clock.tick(60)
+        screen.fill(yellow) 
 
+        pygame.draw.rect(screen, blue, [player_x, player_y, player_w, player_h])
+
+        pygame.display.update()
+        clock.tick(60)
+
+game_loop()
 pygame.quit()
 quit()
