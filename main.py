@@ -24,6 +24,7 @@ def game_loop():
     player_y = 500
     player_w = 50
     player_h = 50
+    player_speed = 3
     x = 0       # used to change x value
     y = 0       # used to change y value
 
@@ -43,31 +44,30 @@ def game_loop():
             if event.type == pygame.KEYDOWN:
 
                 if event.key == pygame.K_LEFT:
-                    x = -5
+                    x = -player_speed
 
                 elif event.key == pygame.K_RIGHT:
-                    x = 5
+                    x = player_speed
 
                 if event.key == pygame.K_DOWN:
-                    y = 5
+                    y = player_speed
 
                 elif event.key == pygame.K_UP:
-                    y = -5
+                    y = -player_speed
 
             # if a key is lifed while another is still held down     
             if event.type == pygame.KEYUP:
                 if (event.key == pygame.K_RIGHT) and keys[pygame.K_LEFT]:
-                    x = -5
+                    x = -player_speed
 
                 elif (event.key == pygame.K_LEFT) and keys[pygame.K_RIGHT]:
-                    x = 5 
+                    x = player_speed
                     
                 elif (event.key == pygame.K_DOWN) and keys[pygame.K_UP]:
-                    y = -5
+                    y = -player_speed
 
                 elif (event.key == pygame.K_UP) and keys[pygame.K_DOWN]:
-                    y = 5 
-                
+                    y = player_speed
                 
                 else:
                     x = 0
