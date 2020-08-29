@@ -25,6 +25,7 @@ def game_loop():
     player_w = 50
     player_h = 50
     x = 0       # used to change x value
+    y = 0       # used to change y value
 
     while True:
         # player starting coordinates and size
@@ -47,19 +48,33 @@ def game_loop():
                 elif event.key == pygame.K_RIGHT:
                     x = 5
 
+                if event.key == pygame.K_DOWN:
+                    y = 5
+
+                elif event.key == pygame.K_UP:
+                    y = -5
+
             # if a key is lifed while another is still held down     
             if event.type == pygame.KEYUP:
-                
                 if (event.key == pygame.K_RIGHT) and keys[pygame.K_LEFT]:
                     x = -5
 
                 elif (event.key == pygame.K_LEFT) and keys[pygame.K_RIGHT]:
                     x = 5 
                     
+                elif (event.key == pygame.K_DOWN) and keys[pygame.K_UP]:
+                    y = -5
+
+                elif (event.key == pygame.K_UP) and keys[pygame.K_DOWN]:
+                    y = 5 
+                
+                
                 else:
                     x = 0
+                    y = 0
 
         player_x += x
+        player_y += y
 
         screen.fill(yellow) 
 
