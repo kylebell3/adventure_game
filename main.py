@@ -41,17 +41,12 @@ def game_loop():
             ##########
             # Movement
             ###########
-
-
-
             elif event.type == pygame.KEYDOWN:
-                    if (player_x > 0):
-                        if event.key == pygame.K_LEFT:
-                            x = -player_speed
+                    if event.key == pygame.K_LEFT:
+                        x = -player_speed
 
-                    if (player_x + player_w < 800):
-                        if event.key == pygame.K_RIGHT:
-                            x = player_speed
+                    if event.key == pygame.K_RIGHT:
+                        x = player_speed
 
                     if event.key == pygame.K_DOWN:
                         y = player_speed
@@ -77,11 +72,27 @@ def game_loop():
                 x = 0
                 y = 0
 
-        # if player_x > 800 - player_w or player_x <= 0:
-        #         x = 0
+        #============
+        # Boundaries
+        #============
+        # left/right boundary
+        if (player_x >= 800 - player_w):
+            if x > 0:
+                x = 0
 
-        # if player_y > 600 - player_h or player_y <= 0:
-        #         y = 0
+        if (player_x <= 0):
+            if x < 0:
+                x = 0
+
+        # top/bottom boundary
+        if (player_y >= 600 - player_h):
+            if y > 0:
+                y = 0
+
+        if (player_y <= 0):
+            if y < 0:
+                y = 0
+
 
         player_x += x
         player_y += y
@@ -90,7 +101,7 @@ def game_loop():
 
         pygame.draw.rect(screen, blue, [player_x, player_y, player_w, player_h])
 
-        pygame.draw.rect(screen, blue_green, [500, 0, 2, 1000])
+        # pygame.draw.rect(screen, blue_green, [500, 0, 2, 1000]) # line long screen
 
         pygame.display.update()
         clock.tick(60)
