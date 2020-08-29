@@ -32,6 +32,8 @@ def game_loop():
         # player starting coordinates and size
 
         for event in pygame.event.get():
+            keys = pygame.key.get_pressed()  # checks what keys are pressed
+
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
@@ -39,9 +41,8 @@ def game_loop():
             ##########
             # Movement
             ###########
-            keys = pygame.key.get_pressed()  # checks what keys are pressed
 
-            if event.type == pygame.KEYDOWN:
+            elif event.type == pygame.KEYDOWN:
 
                 if event.key == pygame.K_LEFT:
                     x = -player_speed
@@ -56,22 +57,22 @@ def game_loop():
                     y = -player_speed
 
             # if a key is lifed while another is still held down     
-            if event.type == pygame.KEYUP:
-                if (event.key == pygame.K_RIGHT) and keys[pygame.K_LEFT]:
-                    x = -player_speed
-
-                elif (event.key == pygame.K_LEFT) and keys[pygame.K_RIGHT]:
-                    x = player_speed
-                    
-                elif (event.key == pygame.K_DOWN) and keys[pygame.K_UP]:
-                    y = -player_speed
-
-                elif (event.key == pygame.K_UP) and keys[pygame.K_DOWN]:
-                    y = player_speed
-                
-                else:
+            elif event.type == pygame.KEYUP:
+                if (event.key == pygame.K_RIGHT):
                     x = 0
+
+                elif (event.key == pygame.K_LEFT):
+                    x = 0
+                    
+                elif (event.key == pygame.K_DOWN):
                     y = 0
+
+                elif (event.key == pygame.K_UP):
+                    y = 0
+                
+            else:
+                x = 0
+                y = 0
 
         player_x += x
         player_y += y
