@@ -26,6 +26,8 @@ class Enemy():
     def __init__(self):
         self.x = random.randrange(100, 650)
         self.y = random.randrange(10, 200)
+        self.patrol_x = 0
+        self.patrol_count = 0
 
 
 def draw_enemy(x,y):
@@ -149,23 +151,25 @@ def game_loop():
             pygame.draw.rect(screen, blue_green, [(player_x + 20), (player_y - 20), 37, 8])
             sword_counter += 1
 
-        # enemy patrol movements
-        if patrol_count <= 100:
-            patrol_x = 1
 
-        if patrol_count > 100 :
-            patrol_x = -1
-
-        if patrol_count >= 200:
-            patrol_count = 0
             
         
-        patrol_count += 1
+        
         
         # draw enemies
         for e in enemy_list:
             # move enemy
-            e.x += patrol_x
+            e.patrol_count += 1
+            e.x += e.patrol_x
+                        
+            if 100 < e.patrol_count <= 200:
+                e.patrol_x = 1
+
+            if e.patrol_count > 200 :
+                e.patrol_x = -1
+
+            if e.patrol_count >= 300:
+                e.patrol_count = 100
 
             # e.y += 
             draw_enemy(e.x, e.y)
@@ -174,6 +178,8 @@ def game_loop():
             if (( (e.x + 50) >= (player_x + 35)  ) and (e.x <= (player_x + 44))) and ( (e.y + 50) >= (player_y - 60)  ) and (e.y <= (player_y)) and sword == True:
                 enemy_list.remove(e)
                 # print("DELETED")
+
+
 
         pygame.draw.rect(screen, blue, [player_x, player_y, player_w, player_h])
 
