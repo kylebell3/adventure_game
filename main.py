@@ -1,5 +1,6 @@
 import pygame
 import time
+import random
 
 pygame.init()
 
@@ -21,6 +22,15 @@ clock = pygame.time.Clock()
 
 sword = False  # sword starts put away
 
+class Enemy():
+    def __init__(self):
+        self.x = random.randrange(100, 650)
+        self.y = random.randrange(100, 200)
+
+
+def draw_enemy(x,y):
+    pygame.draw.rect(screen, purple, [x, y, 50, 50])
+
 
 def game_loop():
     # player starting coordinates and size
@@ -32,6 +42,7 @@ def game_loop():
     x = 0       # used to change x value
     y = 0       # used to change y value
     sword_counter = 0
+    enemy_list = []    # contains all the active enemy objects
 
     while True:
 
@@ -65,6 +76,11 @@ def game_loop():
                     if event.key == pygame.K_SPACE:
                         sword = True
                         print('what')
+
+                    # spawn enemy
+                    if event.key == pygame.K_e:
+                        enemy_list.append(Enemy())
+
 
             # if a key is lifed while another is still held down     
             elif event.type == pygame.KEYUP:
@@ -120,6 +136,13 @@ def game_loop():
             pygame.draw.rect(screen, blue_green, [(player_x + 35), (player_y - 55), 9, 60])
             pygame.draw.rect(screen, blue_green, [(player_x + 20), (player_y - 20), 37, 8])
             sword_counter += 1
+
+
+
+
+        for e in enemy_list:
+            draw_enemy(e.x, e.y)
+
 
         pygame.draw.rect(screen, blue, [player_x, player_y, player_w, player_h])
 
