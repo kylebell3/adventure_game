@@ -25,7 +25,7 @@ sword = False  # sword starts put away
 class Enemy():
     def __init__(self):
         self.x = random.randrange(100, 650)
-        self.y = random.randrange(100, 200)
+        self.y = random.randrange(10, 200)
 
 
 def draw_enemy(x,y):
@@ -43,6 +43,9 @@ def game_loop():
     y = 0       # used to change y value
     sword_counter = 0
     enemy_list = []    # contains all the active enemy objects
+
+    blade_x = (player_x + 35)  # sword blade x position
+    blade_y = (player_y - 55)  # sword blade y position
 
     while True:
 
@@ -75,11 +78,15 @@ def game_loop():
                     # attack with sword
                     if event.key == pygame.K_SPACE:
                         sword = True
-                        print('what')
 
                     # spawn enemy
                     if event.key == pygame.K_e:
                         enemy_list.append(Enemy())
+
+                    # quit with "tab"
+                    if event.key == pygame.K_TAB:
+                        pygame.quit()
+                        quit()
 
 
             # if a key is lifed while another is still held down     
@@ -137,12 +144,14 @@ def game_loop():
             pygame.draw.rect(screen, blue_green, [(player_x + 20), (player_y - 20), 37, 8])
             sword_counter += 1
 
-
-
-
+        # draw enemies
         for e in enemy_list:
             draw_enemy(e.x, e.y)
 
+            # kill enemy if hit by sword
+            if (( (e.x + 50) >= (player_x + 35)  ) and (e.x <= (player_x + 44))) and ( (e.y + 50) >= (player_y - 60)  ) and (e.y <= (player_y)) and sword == True:
+                enemy_list.remove(e)
+                print("DELETED")
 
         pygame.draw.rect(screen, blue, [player_x, player_y, player_w, player_h])
 
