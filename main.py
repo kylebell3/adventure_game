@@ -46,6 +46,11 @@ def game_loop():
 
     blade_x = (player_x + 35)  # sword blade x position
     blade_y = (player_y - 55)  # sword blade y position
+    
+
+    patrol_count = 0      # timer for patrol movement
+    patrol_x = 0
+    patrol_y = 0
 
     while True:
 
@@ -144,14 +149,31 @@ def game_loop():
             pygame.draw.rect(screen, blue_green, [(player_x + 20), (player_y - 20), 37, 8])
             sword_counter += 1
 
+        # enemy patrol movements
+        if patrol_count <= 100:
+            patrol_x = 1
+
+        if patrol_count > 100 :
+            patrol_x = -1
+
+        if patrol_count >= 200:
+            patrol_count = 0
+            
+        
+        patrol_count += 1
+        
         # draw enemies
         for e in enemy_list:
+            # move enemy
+            e.x += patrol_x
+
+            # e.y += 
             draw_enemy(e.x, e.y)
 
             # kill enemy if hit by sword
             if (( (e.x + 50) >= (player_x + 35)  ) and (e.x <= (player_x + 44))) and ( (e.y + 50) >= (player_y - 60)  ) and (e.y <= (player_y)) and sword == True:
                 enemy_list.remove(e)
-                print("DELETED")
+                # print("DELETED")
 
         pygame.draw.rect(screen, blue, [player_x, player_y, player_w, player_h])
 
