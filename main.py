@@ -66,9 +66,9 @@ def game_loop():
                 pygame.quit()
                 quit()
    
-            ##########
-            # Movement
-            ###########
+        ##########
+        # Movement
+        ###########
             elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_LEFT:
                         x = -player_speed
@@ -114,9 +114,9 @@ def game_loop():
                 x = 0
                 y = 0
 
-        #============
-        # Boundaries
-        #============
+    #============
+    # Boundaries
+    #============
         # left/right boundary
         if (player_x >= 800 - player_w):
             if x > 0:
@@ -140,8 +140,8 @@ def game_loop():
         player_y += y
 
 
-        # sword will swing for ~.8 seconds
-        if sword_counter >= 50:
+        # sword will swing for ~.5 seconds
+        if sword_counter >= 35:
             sword = False
             sword_counter = 0
 
@@ -155,8 +155,9 @@ def game_loop():
             
         
         
-        
-        # draw enemies
+    ##############
+    # draw enemies
+    ##############
         for e in enemy_list:
             # move enemy
             e.patrol_count += 1
@@ -180,7 +181,7 @@ def game_loop():
                 # print("DELETED")
 
 
-
+        # Draw Player
         pygame.draw.rect(screen, blue, [player_x, player_y, player_w, player_h])
 
 
