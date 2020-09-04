@@ -15,6 +15,7 @@ blue = (48, 131, 220)
 yellow = (248, 255, 229)
 green = (125, 222, 146)
 blue_green = (46, 191, 165)
+black = (0,0,0)
         
 # clock
 clock = pygame.time.Clock()
@@ -33,6 +34,11 @@ class Enemy():
 def draw_enemy(x,y):
     pygame.draw.rect(screen, purple, [x, y, 50, 50])
 
+def display_score(score):
+    font = pygame.font.SysFont(None, 25)
+    text = font.render("SCORE: " + str(score), True, black)
+    textRect = text.get_rect()
+    screen.blit(text, (0,0))
 
 def game_loop():
     # player starting coordinates and size
@@ -43,21 +49,23 @@ def game_loop():
     player_speed = 3
     x = 0       # used to change x value
     y = 0       # used to change y value
-    sword_counter = 0
     enemy_list = []    # contains all the active enemy objects
 
+    sword_counter = 0       # used to count how many frames sword is displayed
     blade_x = (player_x + 35)  # sword blade x position
     blade_y = (player_y - 55)  # sword blade y position
     
+    score = 0           # player's score to be displayed
 
     patrol_count = 0      # timer for patrol movement
     patrol_x = 0
     patrol_y = 0
+    sword = False
 
     while True:
 
         screen.fill(yellow) 
-        global sword
+        # global sword
 
         for event in pygame.event.get():
             keys = pygame.key.get_pressed()  # checks what keys are pressed
@@ -179,7 +187,10 @@ def game_loop():
             if (( (e.x + 50) >= (player_x + 35)  ) and (e.x <= (player_x + 44))) and ( (e.y + 50) >= (player_y - 60)  ) and (e.y <= (player_y)) and sword == True:
                 enemy_list.remove(e)
                 # print("DELETED")
+                score += 10
 
+        # display score
+        # display_score(score)
 
         # Draw Player
         pygame.draw.rect(screen, blue, [player_x, player_y, player_w, player_h])
